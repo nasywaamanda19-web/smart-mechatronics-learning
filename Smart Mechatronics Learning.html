@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Mechatronics Learning FINAL</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f9;margin:0;line-height:1.6}
+header{background:#0b63d1;color:#fff;text-align:center;padding:25px}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{background:#fff;padding:20px;border-radius:14px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+button{background:#0b63d1;color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;margin:4px}
+#materi{margin-top:15px;padding:15px;background:#eef4ff;border-radius:10px}
+.option{display:block;margin:8px 0}
+#hasil{font-size:20px;font-weight:bold;margin-top:15px}
+footer{background:#0b63d1;color:#fff;text-align:center;padding:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>Smart Mechatronics Learning</h1>
+<p><b>Nasywa Amanda Saputri</b> | 24050630002</p>
+<p>Pendidikan Teknik Mekatronika - Universitas Negeri Yogyakarta</p>
+</header>
+
+<div class="container">
+<div class="card">
+<h2>Materi Pembelajaran</h2>
+<button onclick="materi('ultra')">Sensor Ultrasonik</button>
+<button onclick="materi('infra')">Sensor Infrared</button>
+<button onclick="materi('suhu')">Sensor Suhu</button>
+<button onclick="materi('motor')">Motor DC</button>
+<button onclick="materi('servo')">Servo Motor</button>
+<button onclick="materi('relay')">Relay</button>
+<div id="materi">Pilih salah satu materi untuk dipelajari.</div>
+</div>
+
+<div class="card">
+<h2>Kuis Mekatronika (10 Soal)</h2>
+<p>Jawab seluruh pertanyaan lalu klik Lihat Nilai.</p>
+<div id="quiz"></div>
+<button onclick="nilai()">Lihat Nilai</button>
+<div id="hasil"></div>
+</div>
+
+<div class="card">
+<h2>Tentang Aplikasi</h2>
+<p>Media pembelajaran interaktif untuk membantu mahasiswa mempelajari komponen dasar mekatronika melalui materi dan kuis.</p>
+</div>
+</div>
+
+<footer>© Smart Mechatronics Learning - UNY</footer>
+
+<script>
+const soal=[
+["Sensor untuk mengukur jarak adalah...","Sensor Ultrasonik","Relay"],
+["Motor DC menghasilkan...","Gerakan Putar","Suhu"],
+["Relay berfungsi sebagai...","Saklar Elektronik","Sensor Jarak"],
+["Sensor Infrared digunakan untuk...","Deteksi Objek","Menggerakkan Motor"],
+["Servo motor memiliki keunggulan...","Kontrol Posisi Presisi","Mengukur Suhu"],
+["DHT11 digunakan untuk...","Suhu dan Kelembapan","Mengukur Jarak"],
+["Contoh aktuator adalah...","Motor DC","Sensor Suhu"],
+["Relay bekerja berdasarkan...","Elektromagnet","Gelombang Suara"],
+["Mekatronika merupakan gabungan...","Mekanik Elektronika dan Kontrol","Kimia dan Biologi"],
+["Fungsi sensor adalah...","Mendeteksi kondisi lingkungan","Menghasilkan gerakan"]
+];
+
+let qhtml="";
+for(let i=0;i<soal.length;i++){
+qhtml+=`<p>${i+1}. ${soal[i][0]}</p>
+<label class="option"><input type="radio" name="q${i}" value="1"> ${soal[i][1]}</label>
+<label class="option"><input type="radio" name="q${i}" value="0"> ${soal[i][2]}</label>`;
+}
+document.getElementById("quiz").innerHTML=qhtml;
+
+function materi(x){
+const data={
+ultra:`<h3>Sensor Ultrasonik</h3><b>Pengertian:</b> Sensor untuk mengukur jarak menggunakan gelombang suara frekuensi tinggi.<br><b>Cara Kerja:</b> Memancarkan gelombang dan menghitung waktu pantul.<br><b>Kelebihan:</b> Akurat dan tanpa kontak langsung.<br><b>Penerapan:</b> Robot, parkir otomatis, pengukur level air.`,
+infra:`<h3>Sensor Infrared</h3><b>Pengertian:</b> Sensor untuk mendeteksi objek menggunakan cahaya inframerah.<br><b>Cara Kerja:</b> Mengirim dan menerima pantulan sinar IR.<br><b>Kelebihan:</b> Respon cepat dan murah.<br><b>Penerapan:</b> Line follower dan penghitung barang.`,
+suhu:`<h3>Sensor Suhu DHT11</h3><b>Pengertian:</b> Mengukur suhu dan kelembapan udara.<br><b>Cara Kerja:</b> Mengirim data digital ke mikrokontroler.<br><b>Kelebihan:</b> Mudah digunakan.<br><b>Penerapan:</b> Monitoring cuaca dan greenhouse.`,
+motor:`<h3>Motor DC</h3><b>Pengertian:</b> Aktuator yang mengubah energi listrik menjadi putaran mekanik.<br><b>Cara Kerja:</b> Medan magnet memutar rotor.<br><b>Kelebihan:</b> Mudah dikontrol.<br><b>Penerapan:</b> Conveyor dan robot mobile.`,
+servo:`<h3>Servo Motor</h3><b>Pengertian:</b> Motor dengan kontrol posisi yang presisi.<br><b>Cara Kerja:</b> Dikendalikan sinyal PWM.<br><b>Kelebihan:</b> Presisi tinggi.<br><b>Penerapan:</b> Lengan robot dan otomasi.`,
+relay:`<h3>Relay</h3><b>Pengertian:</b> Saklar elektronik berbasis elektromagnet.<br><b>Cara Kerja:</b> Kumparan menggerakkan kontak saklar.<br><b>Kelebihan:</b> Dapat mengontrol beban besar.<br><b>Penerapan:</b> Panel kontrol dan industri.`
+};
+document.getElementById("materi").innerHTML=data[x];
+}
+
+function nilai(){
+let s=0;
+for(let i=0;i<10;i++){
+let a=document.querySelector('input[name="q'+i+'"]:checked');
+if(a)s+=parseInt(a.value);
+}
+let skor=s*10;
+let ket=skor>=80?"🏆 Sangat Baik":(skor>=60?"👍 Baik":"📚 Perlu Belajar Lagi");
+document.getElementById("hasil").innerHTML="Nilai Anda: "+skor+"<br>"+ket;
+}
+</script>
+</body>
+</html>
